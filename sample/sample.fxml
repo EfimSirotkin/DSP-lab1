@@ -1,0 +1,163 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<VBox spacing="50" fx:controller="sample.Controller"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="20" left="10" bottom="20"></Insets>
+    </padding>
+    <HBox spacing="20" alignment="TOP_LEFT">
+        <VBox alignment="CENTER">
+            <ImageView fx:id="primaryImageView" fitHeight="200" fitWidth="300">
+
+            </ImageView>
+            <Text text="Исходное изображение">
+
+            </Text>
+
+        </VBox>
+        <VBox alignment="CENTER">
+            <ImageView fx:id="firstImageView" fitHeight="200" fitWidth="300">
+
+            </ImageView>
+            <Text text="Препарирование Д">
+
+            </Text>
+        </VBox>
+        <VBox alignment="CENTER">
+            <ImageView fx:id="secondImageView" fitHeight="200" fitWidth="300">
+
+            </ImageView>
+            <Text text="Препарирование Е">
+
+            </Text>
+        </VBox>
+        <VBox alignment="CENTER">
+            <ImageView fx:id="minImageView" fitHeight="200" fitWidth="300">
+
+            </ImageView>
+            <Text text="Мин-фильтр">
+
+            </Text>
+        </VBox>
+        <VBox alignment="CENTER">
+            <ImageView fx:id="maxImageView" fitHeight="200" fitWidth="300">
+
+            </ImageView>
+            <Text text="Макс-фильтр">
+
+            </Text>
+        </VBox>
+        <VBox alignment="CENTER">
+            <ImageView fx:id="minMaxImageView" fitHeight="200" fitWidth="300">
+
+            </ImageView>
+            <Text text="Мин-макс-фильтр">
+
+            </Text>
+        </VBox>
+    </HBox>
+
+    <HBox alignment="CENTER" spacing="100">
+
+        <VBox>
+            <Text text="Исходное изображение">
+
+            </Text>
+            <BarChart fx:id="pixelDistributionHistogram" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="primaryImageXAxis" label="Значения пикселов" side="BOTTOM"></CategoryAxis>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="primaryImageYAxis" label="Частота пикселов" side="LEFT">
+
+                    </NumberAxis>
+                </yAxis>
+            </BarChart>
+
+            <Text text="Препарирование Д">
+
+            </Text>
+            <BarChart fx:id="pixelFirstFilterDistributionHistogram" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="firstFilterImageXAxis" label="Значения пикселов" side="BOTTOM"></CategoryAxis>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="firstFilterImageYAxis" label="Частота пикселов" side="LEFT">
+
+                    </NumberAxis>
+                </yAxis>
+            </BarChart>
+
+            <Text text="Препарирование Е">
+
+            </Text>
+            <BarChart fx:id="pixelSecondFilterDistributionHistogram" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="secondFilterImageXAxis" label="Значения пикселов" side="BOTTOM"></CategoryAxis>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="secondFilterImageYAxis" label="Частота пикселов" side="LEFT">
+
+                    </NumberAxis>
+                </yAxis>
+            </BarChart>
+        </VBox>
+        <VBox>
+            <Text text="Мин-фильтр">
+
+            </Text>
+            <BarChart fx:id="pixelMinFilterDistributionHistogram" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="minFilterImageXAxis" label="Значения пикселов" side="BOTTOM"></CategoryAxis>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="minFilterImageYAxis" label="Частота пикселов" side="LEFT">
+
+                    </NumberAxis>
+                </yAxis>
+            </BarChart>
+
+            <Text text="Макс-фильтр">
+
+            </Text>
+            <BarChart fx:id="pixelMaxDistributionHistogram" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="maxFilterImageXAxis" label="Значения пикселов" side="BOTTOM"></CategoryAxis>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="maxFilterImageYAxis" label="Частота пикселов" side="LEFT">
+
+                    </NumberAxis>
+                </yAxis>
+            </BarChart>
+
+            <Text text="Мин-Макс-фильтр">
+
+            </Text>
+            <BarChart fx:id="pixelMinMaxFilterDistributionHistogram" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis fx:id="minMaxFilterImageXAxis" label="Значения пикселов" side="BOTTOM"></CategoryAxis>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="minMaxFilterImageYAxis" label="Частота пикселов" side="LEFT">
+
+                    </NumberAxis>
+                </yAxis>
+            </BarChart>
+        </VBox>
+    </HBox>
+
+
+</VBox>
