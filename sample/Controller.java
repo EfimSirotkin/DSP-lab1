@@ -85,6 +85,8 @@ public class Controller implements Initializable {
     public String minFilteredPath = "F:\\Code\\labsIIPY\\Cosi_lab1\\res\\landscape_min.jpg";
     public String maxFilteredPath = "F:\\Code\\labsIIPY\\Cosi_lab1\\res\\landscape_max.jpg";
     public String min_maxFilteredPath = "F:\\Code\\labsIIPY\\Cosi_lab1\\res\\landscape_min_max.jpg";
+    public String highFrequencyFilteredPath = "F:\\Code\\labsIIPY\\Cosi_lab1\\res\\landscape_high_freq.jpg";
+    public String nonLinearFilteredPath = "F:\\Code\\labsIIPY\\Cosi_lab1\\res\\myTest_non_linear.jpg";
 
     public int windowSize = 3;
     public int histogramWidth = 750;
@@ -99,7 +101,8 @@ public class Controller implements Initializable {
             ImageProcessor.MinOrMaxFilterImage(primaryImagePath, minFilteredPath,windowSize, false);
             ImageProcessor.MinOrMaxFilterImage(primaryImagePath, maxFilteredPath,windowSize, true);
             ImageProcessor.minMaxImageFilter(primaryImagePath,min_maxFilteredPath, windowSize);
-
+            ImageProcessor.HighFrequencyFilter("res/CAR.png", highFrequencyFilteredPath, windowSize);
+            ImageProcessor.nonLinearCorrection("res/myTest.jpg", nonLinearFilteredPath);
 
             pixelDistributionHistogram.getData().add(ImageProcessor.getDistributionHistogramSeries(primaryImagePath));
             pixelFirstFilterDistributionHistogram.getData().add(ImageProcessor.getDistributionHistogramSeries(firstPreparationFilterImagePath));

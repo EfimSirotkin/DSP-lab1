@@ -157,8 +157,6 @@ public class ImageProcessor {
 
                 }
 
-                int newPixel = (int) (0.3 * newR + 0.59 * newG + 0.11 * newB);
-
                 Color newPixelColor = new Color(newR, newG, newB);
 
                 destinationImage.setRGB(x,y,newPixelColor.getRGB());
@@ -266,15 +264,93 @@ public class ImageProcessor {
         return maximumPixelIndex;
     }
 
-    public void minFilter(String imagePath) throws IOException {
-        File sourceFile = new File(imagePath);
+    public static void HighFrequencyFilter(String inputImagePath, String destinationImagePath, int windowSize) throws IOException {
+
+        File sourceFile = new File(inputImagePath);
         BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-        int windowSize = 3;
-
+        BufferedImage destinationImage = ImageIO.read(sourceFile);
 
         int imageWidth = sourceImage.getWidth();
         int imageHeight = sourceImage.getHeight();
+
+        int[] redPixels = new int[windowSize * windowSize];
+        int[] greenPixels = new int[windowSize * windowSize];
+        int [] bluePixels = new int[windowSize * windowSize];
+
+        int outputRedPixel = 0;
+        int outputGreenPixel = 0;
+        int outputBluePixel = 0;
+
+        int heightDelta = windowSize / 2;
+        int widthDelta = windowSize / 2;
+
+      /*  int[] highCore = { -1, -1, -1
+                           -1, 9,  -1
+                           -1, -1, -1};*/
+
+        int[] highCore = { 0, -1, 0
+                -1, 5,  -1,
+                0, -1, 0};
+        for(int y = heightDelta; y < imageHeight - heightDelta; y++)
+            for(int x = widthDelta; x < imageWidth - widthDelta; x++)
+            {
+                int t = 0;
+                for(int i = y - heightDelta; i < y + heightDelta + 1; i++)
+                    for(int j = x - widthDelta; j < x + widthDelta + 1; j++)
+                    {
+
+                        Color currentColor = new Color(sourceImage.getRGB(j,i));
+                        redPixels[t] = currentColor.getRed();
+                        greenPixels[t] = currentColor.getGreen();
+                        bluePixels[t] = currentColor.getBlue();
+
+                        t++;
+                    }
+                for(int i = 0; i < highCore.length; i++)
+                {
+                    outputRedPixel += highCore[i] * redPixels[i];
+                    outputGreenPixel += highCore[i] * greenPixels[i];
+                    outputBluePixel += highCore[i] * bluePixels[i];
+                }
+                outputRedPixel = checkPixelValue(outputRedPixel, 255);
+                outputGreenPixel = checkPixelValue(outputGreenPixel, 255);
+                outputBluePixel = checkPixelValue(outputBluePixel,255);
+
+                Color newPixelColor = new Color(outputRedPixel, outputGreenPixel, outputBluePixel);
+
+                destinationImage.setRGB(x,y, newPixelColor.getRGB());
+
+            }
+        File outputFile = new File(destinationImagePath);
+        ImageIO.write(destinationImage, "jpg", outputFile);
     }
 
+    public static void nonLinearCorrection(String inputImagePath, String outputImagePath) throws IOException {
+        double c = 0.97;
+        double gamma = 1.04;
+
+        File sourceFile = new File(inputImagePath);
+        BufferedImage sourceImage = ImageIO.read(sourceFile);
+        BufferedImage destinationImage = ImageIO.read(sourceFile);
+
+        int imageWidth = sourceImage.getWidth();
+        int imageHeight = sourceImage.getHeight();
+
+        for(int y = 0; y < imageHeight; ++y)
+            for(int x = 0; x < imageWidth; ++x) {
+                Color currentColor = new Color(sourceImage.getRGB(x,y));
+
+                int Red = (int) (c * Math.pow(currentColor.getRed(), gamma));
+                int Green = (int) (c * Math.pow(currentColor.getGreen(), gamma));
+                int Blue = (int)(c * Math.pow(currentColor.getBlue(), gamma));
+
+                Red = checkPixelValue(Red, 255);
+                Green = checkPixelValue(Green, 255);
+                Blue = checkPixelValue(Blue, 255);
+
+                destinationImage.setRGB(x,y, new Color(Red,Green, Blue).getRGB());
+            }
+        File outputFile = new File(outputImagePath);
+        ImageIO.write(destinationImage, "jpg", outputFile);
+    }
 }
